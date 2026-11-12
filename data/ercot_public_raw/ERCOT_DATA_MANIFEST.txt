@@ -1,0 +1,5 @@
+ERCOT Public Data Pull — Raw Original Files
+Download Date: 2026-11-12 (UTC)
+Requested Years: 2011, 2019, 2020, 2021, 2022, 2023, 2024
+
+See full files for load and prices under this directory.
