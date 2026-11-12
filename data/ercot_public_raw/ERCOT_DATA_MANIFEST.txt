@@ -2,4 +2,49 @@ ERCOT Public Data Pull — Raw Original Files
 Download Date: 2026-11-12 (UTC)
 Requested Years: 2011, 2019, 2020, 2021, 2022, 2023, 2024
 
-See full files for load and prices under this directory.
+============================================================
+1) HOURLY LOAD BY WEATHER ZONE
+Source Page: https://www.ercot.com/gridinfo/load/load_hist
+All requested years available. Files contain the 8 weather zones
+(Coast, East, Far West, North, North Central, South Central,
+Southern, West) plus ERCOT total.
+
+File Name                          | Source URL                                                                 | Size
+-----------------------------------|-----------------------------------------------------------------------------|---------
+2011_ercot_hourly_load_data.xls    | https://www.ercot.com/files/docs/2015/10/22/2011_ercot_hourly_load_data.xls | 1.8 MB
+Native_Load_2019.zip               | https://www.ercot.com/files/docs/2020/01/09/Native_Load_2019.zip            | 1.1 MB
+Native_Load_2020.zip               | https://www.ercot.com/files/docs/2021/01/12/Native_Load_2020.zip            | 1.1 MB
+Native_Load_2021.zip               | https://www.ercot.com/files/docs/2021/11/12/Native_Load_2021.zip            | 1.1 MB
+Native_Load_2022.zip               | https://www.ercot.com/files/docs/2022/02/08/Native_Load_2022.zip            | 1.1 MB
+Native_Load_2023.zip               | https://www.ercot.com/files/docs/2023/02/09/Native_Load_2023.zip            | 1.1 MB
+Native_Load_2024.zip               | https://www.ercot.com/files/docs/2024/02/06/Native_Load_2024.zip            | 1.1 MB
+
+Note: 2011 is XLS; 2019–2024 are ZIP archives containing the native load CSVs.
+No data was altered, converted, merged, or cleaned.
+
+============================================================
+2) REAL-TIME HUB & LOAD ZONE PRICES
+Source Page: https://www.ercot.com/mp/data-products/data-product-details?id=NP6-785-ER
+Report Type ID: 13061 (Historical RTM Load Zone and Hub Prices)
+All requested years available. Files contain 15-minute Settlement Point Prices
+for hubs and load zones (including HB_NORTH, HB_SOUTH, LZ_NORTH, LZ_SOUTH).
+
+File Name              | DocID       | Download URL                                                              | Approx Size
+-----------------------|-------------|---------------------------------------------------------------------------|-------------
+RTMLZHBSPP_2011.zip    | 318479607   | https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=318479607 | 8.5 MB
+RTMLZHBSPP_2019.zip    | 694284436   | https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=694284436 | 14 MB
+RTMLZHBSPP_2020.zip    | 751356439   | https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=751356439 | 13 MB
+RTMLZHBSPP_2021.zip    | 814922832   | https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=814922832 | 13 MB
+RTMLZHBSPP_2022.zip    | 886632075   | https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=886632075 | 14 MB
+RTMLZHBSPP_2023.zip    | 969805139   | https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=969805139 | 14 MB
+RTMLZHBSPP_2024.zip    | 1065471230  | https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=1065471230 | 14 MB
+
+No data was altered, converted, merged, or cleaned.
+All files are original ZIP archives as published by ERCOT.
+
+============================================================
+AVAILABILITY NOTES
+- All requested years and datasets were available.
+- No substitutions or fallbacks were required.
+- NP6-345-CD (Actual System Load by Weather Zone) was not needed;
+  the primary Hourly Load Data Archives contained all years.
