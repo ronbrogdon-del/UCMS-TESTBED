@@ -1,0 +1,23 @@
+{
+ "supply_cap": true,
+ "region_km": 0.0,
+ "cut_nodes": [],
+ "cut_fraction": 0.0,
+ "ramp_start_s": 3600.0,
+ "ramp_end_s": 3600.0,
+ "horizon_s": 43200.0,
+ "output_dt_s": 60.0,
+ "compressor_failures": [
+  {
+   "station": "victoria",
+   "comps": [
+    9,
+    24
+   ],
+   "mode": "bypass",
+   "t_fail_s": 3600.0,
+   "ramp_s": 300.0,
+   "precedent": "screening; unit trips and station outages are routine reported pipeline events (precedent list in protocol)"
+  }
+ ]
+}
