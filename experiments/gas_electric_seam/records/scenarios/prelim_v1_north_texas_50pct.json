@@ -1,0 +1,22 @@
+{
+ "cut_nodes": [
+  546,
+  553,
+  556,
+  605,
+  613,
+  618,
+  650,
+  658,
+  661,
+  674,
+  681,
+  697
+ ],
+ "cut_fraction": 0.5,
+ "ramp_start_s": 3600,
+ "ramp_end_s": 10800,
+ "horizon_s": 28800,
+ "region": "processing plants within 250 km pipeline distance of node 546",
+ "label": "exploratory, illustrative; not protocol tiers"
+}

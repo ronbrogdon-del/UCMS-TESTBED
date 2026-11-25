@@ -1,0 +1,5 @@
+trial,supply_cap,cut,horizon_h,plants_below_2.8MPag,lowest_plant_kPa,max_plant_change_kPa
+A,False,0.5 within 600.0 km,12.0,0,3237.0,251.4
+B,False,1.0 within 600.0 km,12.0,0,3134.6,553.7
+C0,True,0.0 within 600.0 km,12.0,0,3329.8,1.5
+CB,True,1.0 within 600.0 km,12.0,0,3122.5,560.7

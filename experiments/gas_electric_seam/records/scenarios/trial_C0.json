@@ -1,0 +1,10 @@
+{
+ "supply_cap": true,
+ "region_km": 600.0,
+ "cut_nodes": [],
+ "cut_fraction": 0.0,
+ "ramp_start_s": 3600.0,
+ "ramp_end_s": 10800.0,
+ "horizon_s": 43200.0,
+ "output_dt_s": 300.0
+}
