@@ -1,0 +1,15 @@
+{
+ "events_s": {},
+ "mode": "uri",
+ "couple_dt_s": 60.0,
+ "scenario": {
+  "output_dt_s": 60.0,
+  "ramp_end_s": 3600.0,
+  "supply_cap": true,
+  "ramp_start_s": 3600.0,
+  "region_km": 0.0,
+  "horizon_s": 108000.0,
+  "cut_fraction": 0.0,
+  "cut_nodes": []
+ }
+}
