@@ -16,6 +16,8 @@ import numpy as np, pandas as pd
 src, cdf, out, NS, COMMIT = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4]), sys.argv[5]
 runs = dict(a.split("=", 1) for a in sys.argv[6:])
 NOISE_SD, SEED0, FLOOR = 1.4, 20261125, 2901.3
+MCOLS = ["Series", "What it measures", "System of record", "Units", "Cadence", "Start", "End", "Time zone", "Role", "Notes",
+         "File", "Timestamp column", "Value column"]   # same column order as v1-v3 manifests
 raw = json.load(open(src)); nodes = {n["number"]: n for n in raw["nodes"]}; cd = json.load(open(cdf))
 def km(a, b, c, d):
     p1, p2 = math.radians(a), math.radians(c); dp, dl = p2 - p1, math.radians(d - b)
@@ -53,7 +55,7 @@ for s in range(NS):
         rows.append(dict(base, **{"Series": "Min_delivery_pressure", "What it measures": "Minimum gas-turbine fuel supply pressure (constant)", "Role": "Load / driver",
                                   "System of record": "OEM natural-gas fuel specification (PSO Comanche RFP, Appendix C Att. 4): 2.8-5 MPag at GT package inlet; low end used",
                                   "Notes": "2.8 MPag + 101.3 kPa = 2901.3 kPa abs", "Value column": "Min_delivery_pressure"}))
-        pd.DataFrame(rows).to_csv(os.path.join(d_, "series_manifest.csv"), index=False)
+        pd.DataFrame(rows)[MCOLS].to_csv(os.path.join(d_, "series_manifest.csv"), index=False)
         cfg = {"state_series": cols, "period": "D", "margin": {"plus": ["Weakest_plant_pressure"], "minus": ["Min_delivery_pressure"]},
                "shift": {"mode": "fixed", "baseline_start": "2030-01-01 00:00:00", "baseline_end": "2030-01-01 00:55:00",
                          "search_from": "2030-01-01 01:00:00"}}
