@@ -117,6 +117,46 @@ Sections 4, 5, 6, 8 and 11 are filled in from the calibration record and then fr
 
 ---
 
+# 2B. Operator Tuning Phase (before the freeze)
+
+Section 2A checks the physics injection and never uses the SCFL engine. This phase is separate: it tunes the engine's operator settings on a dedicated tuning set, then freezes them.
+
+## Operators in scope
+
+- Tuned: DRIFT, SHIFT, RUPTURE, STRESS, QUENCH.
+- KINETIC is in scope only if a form for this data class is supplied before the freeze; otherwise it is reported as not computed.
+- QUENCH is tuned only on tuning runs that include a recovery phase (Section 7). Without one it is reported, not relied on.
+
+## Tuning set
+
+- Built from scenarios that are disjoint from the sealed set: different failure stations, strain levels, regions, onset timings and noise seeds.
+- The exploratory runs v1–v4 (November 2026) belong to the tuning set. They are excluded from the sealed dataset and from every statistic in Sections 12–14.
+- Each tuning package is stamped with its testbed commit.
+
+## Roles
+
+- The operator settings are chosen and adjusted by the UCMS team leader. They are proprietary and are not published or retained by anyone outside UCMS.
+- Testbed construction, tuning data and checks of readings against simulator ground truth are done separately from the choice of settings.
+
+## What is frozen at the end of tuning
+
+1. Engine fingerprints (v1.1.0 or a successor version, stated).
+2. A fingerprint of the full operator configuration, deposited without the values.
+3. The decision rule for a precursor window: which operator readings count, the search window, and how a control exit is scored.
+4. The role assigned to each operator in this test (for example, SHIFT as strain-onset reading, STRESS as break marker), stated before the sealed run.
+5. The period setting (hourly unless changed here).
+
+## Sealed scenario selection
+
+- The sealed scenarios are drawn by a seeded script from the eligible lists in Sections 4–6. The seed is set by a person outside UCMS and is not known to anyone tuning the operators until after the freeze tag.
+- No change to settings, decision rule or roles is permitted after the freeze tag.
+
+## Publication
+
+- Results are published whatever the outcome, together with the tuning record (counts and checks, not setting values).
+
+---
+
 # 3. Simulation Driving Inputs
 
 The dataset snapshot does not contain demand evolution, so driving curves are imposed.
