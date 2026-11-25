@@ -6,7 +6,7 @@ Conditions (30 h, capped supply, coupled loop, uri mode):
   strain        100% cut of processing plants within 600 km of node 546, ramp 1-3 h (= cut41)
   strain_hou20  strain + Houston station (compressor 20) isolated at 2 h, 5 min valve closure
   strain_vic    strain + Victoria station (compressors 9, 24) isolated at 2 h, 5 min valve closure
-Sampling: every 5th 60 s record -> 5-min cadence. Declared sensor noise sd 1.4 kPa; seeds 20261125.. (one per
+Sampling: nearest coupling record (60 s apart) to each 5-min mark. Declared sensor noise sd 1.4 kPa; seeds 20261125.. (one per
 replicate; the same seed gives the same noise realisation in all four conditions).
 Usage: python3 -I build_scfl_inputs_v4.py <Texas7k_Gas.json> <coupling_data.json> <out_dir> <n_seeds> <commit> \
            control=<out.json> strain=<out.json> strain_hou20=<out.json> strain_vic=<out.json>
@@ -27,10 +27,11 @@ SOR = "GasTranSim.jl on Texas7k combined electric-gas test case, coupled loop (u
 data = {}
 for cond, f in runs.items():
     r = json.load(open(f)); t = np.array(r["t_s"])
-    keep = np.isclose(np.mod(t, 300.0), 0.0, atol=1.0) | np.isclose(np.mod(t, 300.0), 300.0, atol=1.0)
+    grid = np.arange(0.0, float(r["scenario"]["horizon_s"]) + 1.0, 300.0)   # 5-min marks
+    keep = np.array([int(np.argmin(np.abs(t - g))) for g in grid])           # nearest coupling record (60 s apart)
+    assert np.max(np.abs(t[keep] - grid)) < 60.0
     df = pd.DataFrame({c: np.array(r["pressure_kPa"][str(n)])[keep] for c, n in zip(cols, grp)})
-    df.index = START + pd.to_timedelta(np.round(t[keep] / 300.0) * 300.0, unit="s"); df.index.name = "timestamp"
-    df = df[~df.index.duplicated()]
+    df.index = START + pd.to_timedelta(grid, unit="s"); df.index.name = "timestamp"
     data[cond] = (df, r.get("scenario", {}), r["events"])
 n0 = {k: len(v[0]) for k, v in data.items()}; assert len(set(n0.values())) == 1, n0
 folders = []
