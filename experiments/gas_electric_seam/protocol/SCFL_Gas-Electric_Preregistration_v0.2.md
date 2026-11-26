@@ -473,3 +473,23 @@ Collaborator: [ ]
 
 Instrument: SCFL engine v1.1.0 (https://doi.org/10.5281/zenodo.23839571)
 Dataset: Texas Combined Electric–Gas Test Case (Abu-Khalifa and Birchfield, 2023), files as inspected 21 November 2026
+
+---
+
+# 2C. Blind Test with Conventional Baselines (scaffold, 26 November 2026; not yet frozen)
+
+**Question.** Does the Stage 1 precursor gate hold on scenarios nobody has seen, and does it add anything over conventional alarms run on the same inputs?
+
+**Baselines (fixed now; script `src/baselines.py`, thresholds `records/blind/baseline_thresholds.json`).** Each uses only the 31 plant pressures, the first 6 hours as baseline, and a 3-sample (15-minute) persistence:
+- B1 level alarm: weakest-plant pressure at least 3.5 kPa below its baseline mean.
+- B2 rate alarm: 1-hour least-squares slope of the weakest-plant pressure at or below -4.75 kPa/h.
+- B3 multivariate alarm: Hotelling T² of the 31 pressures (Ledoit-Wolf covariance from the baseline) at least 70, counted only while mean pressure is below baseline.
+Thresholds are 1.5 times the largest value seen across the 60 tuning control inputs, rounded up to the grid step. On the tuning data, B1 fired within about 5 minutes of the SCFL gate and B3 fired 30–60 minutes earlier, with no false alarms for any method.
+
+**Scenario pool (to be fixed at the freeze).** Supply loss 20–55% of processing supply; ramp 15 minutes to 6 hours; strain start 06:30–09:00; either no failure or one station failure (isolate or bypass) at a station used in tuning or confirmation, 30 minutes to 6 hours after strain start; the export station (compressor 3) excluded. 16 strain scenarios plus controls, 30-hour test window after a 6-hour baseline, 10 noise seeds each, inputs labelled by random codes.
+
+**Seed.** The NIST Randomness Beacon pulse at a time announced at the freeze, after the settings fingerprint is recorded.
+
+**Pass criteria for the gate.** Opens in at least 95% of strain inputs; at most 1 false gate per 30 control inputs; opens before the first plant runback in every scenario that reaches one. Baselines are scored on the same criteria and reported side by side: detection rate, false gates and median opening time after strain start.
+
+**Still to fix before the freeze.** Settings fingerprint; exact pool lists and draw script; beacon time; answer-key fingerprint.

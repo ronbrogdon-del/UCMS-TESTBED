@@ -1,0 +1,14 @@
+{
+ "n_controls": 60,
+ "max_control_stat": {
+  "B1": 2.104654166666478,
+  "B2": 3.136791608392148,
+  "B3": 44.95955625374209
+ },
+ "thresholds": {
+  "B1": 3.5,
+  "B2": 4.75,
+  "B3": 70.0
+ },
+ "rule": "threshold = 1.5 x the largest persisted statistic over the 60 tuning control inputs, rounded up to the grid step"
+}
