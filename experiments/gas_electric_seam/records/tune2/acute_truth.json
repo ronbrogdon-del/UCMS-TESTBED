@@ -1,0 +1,35 @@
+{
+ "C05_med_c23_iso": {
+  "drop_kPa": 0.0,
+  "acute": false,
+  "twin": "tune1/T03_strain_med.out.json"
+ },
+ "C06_med_c27_iso": {
+  "drop_kPa": 1.3,
+  "acute": false,
+  "twin": "tune1/T03_strain_med.out.json"
+ },
+ "C07_med_c21_iso": {
+  "drop_kPa": 4.9,
+  "acute": false,
+  "twin": "tune1/T03_strain_med.out.json"
+ },
+ "C08_650_hou20_late": {
+  "drop_kPa": 41.4,
+  "acute": true,
+  "twin": "tune2/C03_strain_650_r1h.out.json"
+ },
+ "C09_550_hou15_early": {
+  "drop_kPa": 52.8,
+  "acute": true,
+  "twin": "tune2/C02_strain_550.out.json"
+ },
+ "C11_med_c1_iso": {
+  "drop_kPa": 0.0,
+  "acute": false,
+  "twin": "tune1/T03_strain_med.out.json"
+ },
+ "C10_med_c3_iso": {
+  "excluded": "simulator failure at 16.9 h: isolating the Louisiana export station (compressor 3) drains a dead-end pocket with fixed withdrawals to zero pressure (node 703); no curtailment model. Excluded from the confirmation package."
+ }
+}

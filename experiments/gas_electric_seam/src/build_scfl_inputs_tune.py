@@ -12,7 +12,9 @@ import json, os, sys, math, zipfile, hashlib
 import numpy as np, pandas as pd
 src, cdf, out, NS, COMMIT, PKG, PRE_H = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4]), sys.argv[5], sys.argv[6], float(sys.argv[7])
 runs = dict(a.split("=", 1) for a in sys.argv[8:])
-NOISE_SD, SEED0, FLOOR = 1.4, 20261125, 2901.3
+import os
+NOISE_SD, FLOOR = 1.4, 2901.3
+SEED0 = int(os.environ.get("SEED0", "20261125"))
 MCOLS = ["Series", "What it measures", "System of record", "Units", "Cadence", "Start", "End", "Time zone", "Role", "Notes",
          "File", "Timestamp column", "Value column"]   # same column order as v1-v3 manifests
 raw = json.load(open(src)); nodes = {n["number"]: n for n in raw["nodes"]}; cd = json.load(open(cdf))
