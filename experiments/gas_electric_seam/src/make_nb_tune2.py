@@ -11,10 +11,10 @@ Every input is 24 hours: 00:00–06:00 is the settled baseline, strain starts at
 
 11 conditions × 30 seeds = 330 inputs:
 - C01 control; C12 medium strain (41%, ramp 07:00–09:00)
-- C02 strain 30% (ramp 2 h); C03 strain 47%, 1 h ramp; C04 strain 41%, 4 h ramp
+- C02 strain 22.6% (ramp 2 h); C03 strain 44.3%, 1 h ramp; C04 strain 41.5%, 4 h ramp
 - C05, C06, C07: medium strain + stations c23, c27, c21 isolated (84–114 km from Houston)
-- C08: 47% strain + Houston c20 isolated 10:00 (late)
-- C09: 30% strain + Houston c15 isolated 07:30 (early)
+- C08: 44.3% strain + Houston c20 isolated 10:00 (late)
+- C09: 22.6% strain + Houston c15 isolated 07:30 (early)
 - C11: medium strain + north-east station c1 isolated 08:00 (far)
 
 Use the same `scfl_private_settings.json` as before, unchanged.

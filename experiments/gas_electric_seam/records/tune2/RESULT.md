@@ -17,4 +17,6 @@ occurs three hours into an established strain: RUPTURE did not fire and the STRE
 reach twice the tuning ceiling. Both tuning-package acute breaks occurred within about an hour of strain onset,
 so the tuning set did not cover a late acute break.
 
-Gate opening time after strain onset (median): 30% loss 2.42 h; 41% loss 0.83 h; 47% loss with 1 h ramp 0.58 h; 41% loss with 4 h ramp 1.21 h.
+Gate opening time after strain onset (median): 22.6% loss 2.42 h; 41.5% loss 0.83 h; 44.3% loss with 1 h ramp 0.58 h; 41.5% loss with 4 h ramp 1.21 h.
+
+Correction (26 Nov 2026): an earlier version of this file and of the notebook text labelled the 550 km and 650 km cases as 30% and 47% supply loss. The correct shares of processing-plant supply are 22.6% (550 km) and 44.3% (650 km); 600 km is 41.5%. Scenario files and results are unchanged.
