@@ -146,6 +146,16 @@ Section 2A checks the physics injection and never uses the SCFL engine. This pha
 4. The role assigned to each operator in this test (for example, SHIFT as strain-onset reading, STRESS as break marker), stated before the sealed run.
 5. The period setting (hourly unless changed here).
 
+## Claims carried into the sealed test (decided 26 November 2026, after tuning package 1)
+
+1. **Precursor gate (Stage 1).** Under supply strain, SHIFT opens a gate; in controls it does not. Ground truth is physical: a run has strain if processing-plant supply is cut in the simulator. Gate timing is reported against strain severity and ramp speed; no fixed time target is claimed.
+2. **Acute break at the monitored plants (Stage 2, Tier A).** A station failure is an acute break if, in the simulator, it lowers the pressure at any monitored plant by at least 20 kPa within 1 hour, compared with the identical run without the failure. This definition uses simulator output only and was fixed before the confirmation package was built. In tuning package 1 the two Houston-area isolations dropped plant pressure by 48–50 kPa within 1 hour; every other failure dropped it by 5.3 kPa or less.
+3. **Not claimed: distant breaks.** With the monitored plants alone, a distant station failure could not be told apart from strain that is still building. In the simulator the margin's erosion rate kept increasing in every strain case and did not ease and resume, so no physical event was available to score a "renewed worsening" label without fitting it to the readings. STRESS re-acceleration results are reported as exploratory. Locating distant breaks (adding compressor-station pressures to the state series) is a follow-on study.
+
+## Confirmation package
+
+Before the freeze, one confirmation package with fresh noise seeds, new strain severities and ramps, and failures at stations not used in tuning checks claims 1 and 2 with the rule unchanged. If the rule needs any change after the confirmation package, a further confirmation package is required.
+
 ## Sealed scenario selection
 
 - The sealed scenarios are drawn by a seeded script from the eligible lists in Sections 4–6. The seed is set by a person outside UCMS and is not known to anyone tuning the operators until after the freeze tag.
