@@ -156,6 +156,17 @@ Section 2A checks the physics injection and never uses the SCFL engine. This pha
 
 Before the freeze, one confirmation package with fresh noise seeds, new strain severities and ramps, and failures at stations not used in tuning checks claims 1 and 2 with the rule unchanged. If the rule needs any change after the confirmation package, a further confirmation package is required.
 
+Pass criteria for the confirmation package (fixed 26 November 2026, before the package was run; seeds 20261201–20261230, 30 per case):
+
+| Check | Pass |
+|---|---|
+| Gate opens, each strain case | at least 29 of 30 seeds |
+| Gate stays shut, control | at most 1 of 30 seeds |
+| Tier A flags each acute break (Houston c20 late, Houston c15 early) | at least 27 of 30 seeds |
+| Tier A flags each non-acute failure (stations c21, c23, c27, c1) | at most 1 of 30 seeds |
+
+The package passes only if every row passes. Gate opening times are reported for every strain case. Scoring uses the answer key in `records/tune2/acute_truth.json`.
+
 ## Sealed scenario selection
 
 - The sealed scenarios are drawn by a seeded script from the eligible lists in Sections 4–6. The seed is set by a person outside UCMS and is not known to anyone tuning the operators until after the freeze tag.
