@@ -1,0 +1,6 @@
+chunk,sim_hour_start,sim_hour_end,houston_weakest_margin_start_kPa,houston_weakest_margin_end_kPa,last_2h_rate_kPa_per_h
+7,76,88,429.20,428.30,-0.0642
+8,88,100,428.30,427.67,-0.0460
+9,100,112,427.67,427.20,-0.0337
+10,112,124,427.20,426.86,-0.0255
+11,124,136,426.86,426.60,-0.0198
