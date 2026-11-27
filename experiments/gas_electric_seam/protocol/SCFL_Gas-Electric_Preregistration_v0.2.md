@@ -476,20 +476,55 @@ Dataset: Texas Combined Electric–Gas Test Case (Abu-Khalifa and Birchfield, 20
 
 ---
 
-# 2C. Blind Test with Conventional Baselines (scaffold, 26 November 2026; not yet frozen)
+# 2C. Blind Test with Conventional Baselines (pre-registered 26 November 2026)
 
-**Question.** Does the Stage 1 precursor gate hold on scenarios nobody has seen, and does it add anything over conventional alarms run on the same inputs?
+## Questions
 
-**Baselines (fixed now; script `src/baselines.py`, thresholds `records/blind/baseline_thresholds.json`).** Each uses only the 31 plant pressures, the first 6 hours as baseline, and a 3-sample (15-minute) persistence:
-- B1 level alarm: weakest-plant pressure at least 3.5 kPa below its baseline mean.
-- B2 rate alarm: 1-hour least-squares slope of the weakest-plant pressure at or below -4.75 kPa/h.
-- B3 multivariate alarm: Hotelling T² of the 31 pressures (Ledoit-Wolf covariance from the baseline) at least 70, counted only while mean pressure is below baseline.
-Thresholds are 1.5 times the largest value seen across the 60 tuning control inputs, rounded up to the grid step. On the tuning data, B1 fired within about 5 minutes of the SCFL gate and B3 fired 30–60 minutes earlier, with no false alarms for any method.
+1. **Confirmatory, operating alarms.** Does the Stage 1 precursor gate open before an operator-style low-pressure alarm would sound?
+2. **Confirmatory, statistical detectors.** Does the gate open earlier than conventional statistical detectors run on the same inputs, with no more false gates?
+3. **Exploratory.** How do DRIFT (hourly severity) and the Tier A break check (RUPTURE and STRESS) behave on unseen scenarios? Reported, not pass/fail: neither has a confirmed decision rule, and the pool contains none of the cases built to test them (rerouting without a threshold crossing, single-sensor drift). Those belong to a separate source-discrimination workstream.
 
-**Scenario pool (to be fixed at the freeze).** Supply loss 20–55% of processing supply; ramp 15 minutes to 6 hours; strain start 06:30–09:00; either no failure or one station failure (isolate or bypass) at a station used in tuning or confirmation, 30 minutes to 6 hours after strain start; the export station (compressor 3) excluded. 16 strain scenarios plus controls, 30-hour test window after a 6-hour baseline, 10 noise seeds each, inputs labelled by random codes.
+## Gate
 
-**Seed.** The NIST Randomness Beacon pulse at a time announced at the freeze, after the settings fingerprint is recorded.
+The gate time is the engine's SHIFT lock-in (frozen engine v1.1.0) run with the UCMS operator settings frozen at the freeze tag. The settings file is not published; its SHA-256 fingerprint is recorded in the freeze tag, and the blind notebook checks it before running.
 
-**Pass criteria for the gate.** Opens in at least 95% of strain inputs; at most 1 false gate per 30 control inputs; opens before the first plant runback in every scenario that reaches one. Baselines are scored on the same criteria and reported side by side: detection rate, false gates and median opening time after strain start.
+## Comparison alarms (script `src/baselines.py`, thresholds `records/blind/baseline_thresholds.json`)
 
-**Still to fix before the freeze.** Settings fingerprint; exact pool lists and draw script; beacon time; answer-key fingerprint.
+All use only the 31 plant pressures, the first 6 hours as baseline, and 3-sample (15-minute) persistence.
+- **B0 operator-style alarm (question 1):** weakest-plant pressure at or below 2 bar above the 2.8 MPag runback floor (3,101.3 kPa abs). A fixed setpoint following the typical spacing of a GE 7FA low-low fuel-pressure alarm, 1–2 bar above the low-pressure trip. Not calibrated.
+- **B1 level alarm:** weakest-plant pressure at least 3.5 kPa below its baseline mean.
+- **B2 rate alarm:** 1-hour least-squares slope of weakest-plant pressure at or below -4.75 kPa/h.
+- **B3 multivariate alarm:** Hotelling T² of the 31 pressures against the baseline mean and a Ledoit-Wolf covariance, at least 70, counted only while mean pressure is below baseline.
+
+B1–B3 thresholds are 1.5 times the largest value seen across the 60 tuning control inputs, rounded up to the grid step. On tuning data, B0 sounded 9–14 hours after strain onset; B1 fired within about 5 minutes of the gate; B3 fired 30–60 minutes earlier than the gate.
+
+## Scenario pool and draw (script `src/blind_draw.py`)
+
+- Supply loss: processing plants within 475, 500, 550, 575, 600, 650, 675 or 700 km of node 546 cut (19.1–53.5% of processing supply).
+- Ramp: 0.25, 0.5, 1, 2, 4 or 6 hours. Strain start: 06:30, 07:00, 07:30, 08:00, 08:30 or 09:00.
+- Failure: none (half the draw weight), or one of ten station failures used in tuning or confirmation (Houston c15 or c20 isolated; Victoria isolated or bypassed; c21, c23, c27, c1, Dallas c2 or Permian isolated), 0.5, 1, 2, 3, 4 or 6 hours after strain start. The export station (compressor 3) is excluded.
+- 16 strain scenarios and 4 control labels; 10 noise seeds each (200 inputs); 36-hour runs (6-hour baseline, 30-hour test window); capped supply, coupled loop in Uri mode; inputs labelled by random six-character codes in random order.
+- Seed: the NIST Randomness Beacon 2.0 pulse at 18:00:00 UTC on 27 November 2026 (`https://beacon.nist.gov/beacon/2.0/pulse/time/1795802400000`), used only if the freeze tag is on GitHub before that time; otherwise the pulse at 18:00:00 UTC on the first later day on which the tag precedes it. The draw seed is the first 8 bytes of SHA-256("SCFL-seam-blind-1|" + outputValue).
+- The answer key's SHA-256 is committed before the inputs are sent for measurement; the key is published after the readings are returned.
+
+## Pass criteria (confirmatory)
+
+| Check | Pass |
+|---|---|
+| Gate opens, strain inputs | at least 95% (at least 152 of 160) |
+| Gate stays shut, control inputs | at most 1 of 40 |
+| Gate before first plant runback | in every strain input of every scenario that reaches a runback in the simulator |
+| Question 1: gate before B0 | in at least 95% of strain inputs in which B0 sounds |
+| Question 2: gate earlier than each of B1, B2, B3 | paired by input; reported as the share of strain inputs where the gate is earlier, the median difference, and false gates per method. The gate adds detection value over a detector only if it is earlier in more than half of strain inputs with no more false gates. |
+
+Each confirmatory row is reported as pass or fail; the gate result and each comparison are published whatever the outcome.
+
+## Exploratory scoring
+
+- Tier A break check (rule v4-Tune-2, unchanged): flagged inputs per scenario. Answer key: an isolation at Houston c15 or c20 is acute (it was in all five tuning and confirmation cases); all other failures are not.
+- DRIFT: hourly totals against the tuning-control ceiling, confirmation timing after the gate.
+
+## Known limits
+
+- The person running the engine sees only codes. The person building the inputs (Claude, for UCMS) holds the answer key; this cannot affect readings because the engine, settings and rules are frozen and fingerprinted first.
+- Synthetic case, one seam, slow-onset scenarios only.

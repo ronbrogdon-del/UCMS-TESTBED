@@ -1,5 +1,8 @@
 """Conventional baseline alarms for the gas-electric seam test (pre-registered before the blind draw).
 All use only the input series (31 plant pressures, kPa, 5-min), the first PRE_H hours as baseline, search from PRE_H.
+  B0 operator-style low-pressure alarm: weakest-plant pressure at or below the runback floor (2,901.3 kPa abs, 2.8 MPag)
+                     plus 200 kPa (2 bar), for 3 consecutive samples. Not calibrated: a fixed setpoint, set 2 bar above the
+                     runback floor following the typical GE 7FA spacing of the low-low fuel-pressure alarm 1-2 bar above trip.
   B1 level alarm:    weakest-plant pressure below its baseline mean by >= THR1 kPa for 3 consecutive samples.
   B2 rate alarm:     least-squares slope of weakest-plant pressure over the last 1 h <= -THR2 kPa/h for 3 consecutive samples.
   B3 multivariate:   Hotelling T^2 of the 31 plant pressures against baseline mean and Ledoit-Wolf covariance,
@@ -22,7 +25,8 @@ def stats(folder, pre_h):
     lw = LedoitWolf().fit(base.values); P = np.linalg.inv(lw.covariance_); dX = X.values - base.values.mean(axis=0)
     t2 = np.einsum("ij,jk,ik->i", dX, P, dX); drop = dX.mean(axis=1) < 0
     s3 = pd.Series(np.where(drop, t2, 0.0), index=X.index)
-    return {k: v[v.index >= t0] for k, v in (("B1", s1), ("B2", s2), ("B3", s3))}
+    s0 = (2901.3 + 200.0) - w                                           # >= 0 once at or below the setpoint
+    return {k: v[v.index >= t0] for k, v in (("B0", s0), ("B1", s1), ("B2", s2), ("B3", s3))}
 def persisted(s): return s.rolling(PERSIST).min()                     # value held for PERSIST samples
 def first_alarm(s, thr):
     p = persisted(s); h = p[p >= thr]
@@ -30,7 +34,7 @@ def first_alarm(s, thr):
 GRID = {"B1": np.arange(0.5, 50.01, 0.5), "B2": np.arange(0.25, 30.01, 0.25), "B3": np.arange(10, 2000.1, 5)}
 if sys.argv[1] == "calibrate":
     pre = float(sys.argv[2]); folders = [f for d in sys.argv[3:] for f in sorted(glob.glob(d))]
-    mx = {"B1": 0, "B2": 0, "B3": 0}
+    mx = {"B1": 0, "B2": 0, "B3": 0}   # B0 is a fixed setpoint, not calibrated
     for f in folders:
         st = stats(f, pre)
         for k in mx: mx[k] = max(mx[k], float(persisted(st[k]).max()))
