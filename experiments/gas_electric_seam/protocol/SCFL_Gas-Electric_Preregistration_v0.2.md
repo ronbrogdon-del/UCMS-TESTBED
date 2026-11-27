@@ -486,7 +486,9 @@ Dataset: Texas Combined Electric–Gas Test Case (Abu-Khalifa and Birchfield, 20
 
 ## Gate
 
-The gate time is the engine's SHIFT lock-in (frozen engine v1.1.0) run with the UCMS operator settings frozen at the freeze tag. The settings file is not published; its SHA-256 fingerprint is recorded in the freeze tag, and the blind notebook checks it before running.
+The engine (frozen v1.1.0) runs with its package-default operator settings and the fixed 6-hour SHIFT baseline; no private settings file is applied. The gate time is found by applying the UCMS Stage 1 rule (v4-Tune-2) to the engine's SHIFT output series, exactly as in tuning package 1 and the confirmation package. The rule file is not published; its SHA-256 fingerprint is `5aabf3dfe6fa7b8e14ffb88dd40120ec4bd499abb02d4b925aeba5a82d92dd00`, recorded at the freeze.
+
+Correction (26 November 2026): an earlier message stated that private settings were applied in the confirmation run. The readings show the engine ran on its package defaults (only the baseline window differed). Stage 1 results in both packages were scored from the SHIFT output with the rule above, so the confirmed gate is this rule on default-engine output.
 
 ## Comparison alarms (script `src/baselines.py`, thresholds `records/blind/baseline_thresholds.json`)
 
